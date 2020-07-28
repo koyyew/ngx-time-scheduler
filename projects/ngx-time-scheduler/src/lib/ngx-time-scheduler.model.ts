@@ -23,6 +23,7 @@ export class Item {
 export class Section {
   id: number;
   name: string;
+  classes?: string;
   tooltip?: string;
 }
 

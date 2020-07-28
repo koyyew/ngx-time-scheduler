@@ -52,8 +52,8 @@
       <table class="time-sch-table">
         <tr *ngFor="let sectionItem of sectionItems; trackBy: trackByFn"
             [style.height]="sectionItem.minRowHeight + 'px'">
-          <td class="time-sch-section text-center" #sectionTd
-              (click)="events.SectionClickEvent ? events.SectionClickEvent(sectionItem.section) : false"
+          <td class="{{ sectionItem.section.classes ? sectionItem.section.classes + ' time-sch-section text-center' : 'time-sch-section text-center' }}"
+              #sectionTd (click)="events.SectionClickEvent ? events.SectionClickEvent(sectionItem.section) : false"
               (contextmenu)="events.SectionContextMenuEvent ? events.SectionContextMenuEvent(sectionItem.section, $event) : false"
               [style.cursor]="events.SectionClickEvent ? 'pointer' : ''"
               [title]="sectionItem.section.tooltip? sectionItem.section.tooltip : ''"

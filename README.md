@@ -218,6 +218,7 @@ Sections used to fill the scheduler.
 | ---     | ---    | ---      | ---     | ---         |
 | id      | number | Yes      | `null`  | A unique identifier for the section. |
 | name    | string | Yes      | `null`  | The name to display for the section. |
+| classes | string | No       | `null`  | Any css classes you wish to add to this section. |
 | tooltip | string | No       | `null`  | It is use to display tooltip for the section. |
 
 #### Item
