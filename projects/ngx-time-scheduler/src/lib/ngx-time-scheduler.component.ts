@@ -38,6 +38,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @Input() showBusinessDayOnly = false;
   @Input() weekends = [0, 6]; // Saturday, Sunday
   @Input() weekendHighlight = true;
+  @Input() holidays = [];
   @Input() headerFormat = 'Do MMM YYYY';
   @Input() minRowHeight = 40;
   @Input() maxHeight: string = null;
@@ -57,6 +58,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   SectionLeftMeasure = '0';
   currentPeriod: Period;
   currentPeriodMinuteDiff = 0;
+  holidaysBuffer = [];
   header: Header[];
   sectionItems: SectionItem[];
   subscription = new Subscription();
@@ -204,6 +206,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
     this.header = new Array<Header>();
     this.currentPeriod.timeFrameHeaders.forEach((ele: string, index: number) => {
+      this.holidaysBuffer = [...this.holidays];
       this.header.push(this.getDatesBetweenTwoDates(ele, index));
     });
 
@@ -264,6 +267,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
           colspan = 1;
           if (this.weekendHighlight && this.isWeekend(now.day())) {
             headerDetails.classes = 'weekend';
+          } else if (this.isHoliday(now)) {
+            headerDetails.classes = 'holiday';
           }
         } else {
           colspan++;
@@ -293,6 +298,25 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
   isWeekend(day: number): boolean {
     return this.weekends.includes(day);
+  }
+
+  isHoliday(date): boolean {
+    if (this.holidaysBuffer?.length == 0) {
+      return false;
+    }
+    for (var i = 0; i < this.holidaysBuffer.length; i++) {
+      if (this.holidaysBuffer[i].isBefore(date)) {
+        this.holidaysBuffer.shift(); // remove first item i.e the past holiday
+        this.holidaysBuffer = [...this.holidaysBuffer]; // replace the holiday array
+        i--;
+      } else if (this.holidaysBuffer[i].isSame(date)) {
+        this.holidaysBuffer.shift(); // remove first item i.e the matched holiday
+        this.holidaysBuffer = [...this.holidaysBuffer]; // replace the holiday array
+        i--;
+        return true;
+      }
+    }
+    return false;
   }
 
   drop(event: CdkDragDrop<Section>) {

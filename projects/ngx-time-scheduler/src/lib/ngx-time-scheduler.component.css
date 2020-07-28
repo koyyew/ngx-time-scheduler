@@ -44,6 +44,11 @@
   font-weight: bold;
 }
 
+.holiday {
+  color: #FF0000;
+  font-weight: bold;
+}
+
 .time-sch-wrapper {
   overflow: auto;
 }
