@@ -40,6 +40,7 @@ Use `ngx-ts` in your `app-component.html` template.
   [sections]="sections"
   [events]="events"
   [showBusinessDayOnly]="false"
+  [weekendHighlight]="true"
   [allowDragging]="true"
 ></ngx-ts>
 ```
@@ -167,6 +168,8 @@ export class AppComponent implements OnInit {
 | showGoto              | No        | boolean   | `true`                    | Whether the Goto button should be displayed. |
 | showToday             | No        | boolean   | `true`                    | Whether the Today button should be displayed. |
 | showBusinessDayOnly   | No        | boolean   | `false`                   | Whether business days only displayed (Sat-Sun). |
+| weekendHighlight      | No        | boolean   | `true`                    | Whether to highlight weekends (Sat-Sun). |
+| weekends              | No        | number[]  | `[0, 6]`                  | An array of 'day' in `number` to customise weekends where 0 is Sunday and 6 is Saturday. |
 | allowDragging         | No        | boolean   | `false`                   | Whether or not dragging should be allowed. |
 | headerFormat          | No        | string    | `'Do MMM YYYY'`           | The momentjs format to use for the date range displayed as a header. |
 | minRowHeight          | No        | number    | `40`                      | The minimum height, in pixels, that a section should be. |

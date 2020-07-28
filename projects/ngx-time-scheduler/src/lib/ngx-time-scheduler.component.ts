@@ -24,7 +24,7 @@ const moment = moment_;
 })
 export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   @ViewChild('sectionTd') set SectionTd(elementRef: ElementRef) {
-    this.SectionLeftMeasure = elementRef.nativeElement.clientWidth + 'px';
+    this.SectionLeftMeasure = elementRef?.nativeElement.clientWidth + 'px';
     this.changeDetector.detectChanges();
   }
 
@@ -36,6 +36,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   // @Input() allowResizing = false;
   @Input() locale = '';
   @Input() showBusinessDayOnly = false;
+  @Input() weekends = [0, 6]; // Saturday, Sunday
+  @Input() weekendHighlight = true;
   @Input() headerFormat = 'Do MMM YYYY';
   @Input() minRowHeight = 40;
   @Input() maxHeight: string = null;
@@ -170,9 +172,9 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
             (prevElem.item.start <= elem.item.end && elem.item.end <= prevElem.item.end) ||
             (prevElem.item.start >= elem.item.start && elem.item.end >= prevElem.item.end)
           ) && (
-            (prevElem.cssTop <= elem.cssTop && elem.cssTop <= prevElemBottom) ||
-            (prevElem.cssTop <= elemBottom && elemBottom <= prevElemBottom)
-          )) {
+              (prevElem.cssTop <= elem.cssTop && elem.cssTop <= prevElemBottom) ||
+              (prevElem.cssTop <= elemBottom && elemBottom <= prevElemBottom)
+            )) {
             elem.cssTop = prevElemBottom + 1;
           }
         }
@@ -255,11 +257,14 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
     let colspan = 0;
 
     while (now.isBefore(this.end) || now.isSame(this.end)) {
-      if (!this.showBusinessDayOnly || (now.day() !== 0 && now.day() !== 6)) {
+      if (!this.showBusinessDayOnly || !this.isWeekend(now.day())) {
         const headerDetails = new HeaderDetails();
         headerDetails.name = now.locale(this.locale).format(format);
         if (prev && prev !== headerDetails.name) {
           colspan = 1;
+          if (this.weekendHighlight && this.isWeekend(now.day())) {
+            headerDetails.classes = 'weekend';
+          }
         } else {
           colspan++;
           dates.headerDetails.pop();
@@ -278,12 +283,16 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
   getNumberOfWeekendDays(startDate, endDate) {
     let count = 0;
     while (startDate.isBefore(endDate) || startDate.isSame(endDate)) {
-      if ((startDate.day() === 0 || startDate.day() === 6)) {
+      if (this.isWeekend(startDate.day())) {
         count++;
       }
       startDate.add(this.currentPeriod.timeFramePeriod, 'minutes');
     }
     return count;
+  }
+
+  isWeekend(day: number): boolean {
+    return this.weekends.includes(day);
   }
 
   drop(event: CdkDragDrop<Section>) {

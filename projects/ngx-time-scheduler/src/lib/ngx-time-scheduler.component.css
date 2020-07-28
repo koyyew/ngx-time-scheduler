@@ -39,6 +39,11 @@
   z-index: 1;
 }
 
+.weekend {
+  color: #FF0000;
+  font-weight: bold;
+}
+
 .time-sch-wrapper {
   overflow: auto;
 }
