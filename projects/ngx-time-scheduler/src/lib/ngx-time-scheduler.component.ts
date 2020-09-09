@@ -263,11 +263,14 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
       if (!this.showBusinessDayOnly || !this.isWeekend(now.day())) {
         const headerDetails = new HeaderDetails();
         headerDetails.name = now.locale(this.locale).format(format);
+        headerDetails.classes = '';
+        headerDetails.subClasses = '';
         if (this.weekendHighlight && this.isWeekend(now.day())) {
-          headerDetails.classes = 'weekend';
+          headerDetails.classes += ' weekend';
           headerDetails.subClasses += ' weekend-bg';
-        } else if (this.isHoliday(now)) {
-          headerDetails.classes = 'holiday';
+        }
+        if (this.isHoliday(now)) {
+          headerDetails.subClasses += ' holiday-bg';
         }
         if (prev && prev !== headerDetails.name) {
           colspan = 1;

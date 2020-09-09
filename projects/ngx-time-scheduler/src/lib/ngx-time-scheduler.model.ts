@@ -94,4 +94,5 @@ export class HeaderDetails {
   colspan: number;
   tooltip?: string;
   classes?: string;
+  subClasses?: string;
 }

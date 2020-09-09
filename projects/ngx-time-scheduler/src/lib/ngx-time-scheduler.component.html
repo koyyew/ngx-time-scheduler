@@ -61,7 +61,7 @@
             {{sectionItem.section.name}}
           </td>
 
-          <td *ngFor="let td of header[header.length - 1].headerDetails; trackBy: trackByFn"></td>
+          <td class="{{ td.subClasses }}" *ngFor="let td of header[header.length - 1].headerDetails; trackBy: trackByFn"></td>
         </tr>
       </table>
 

@@ -49,9 +49,9 @@
   border-color: #d40511;
 }
 
-.holiday {
-  color: #FF0000;
-  font-weight: bold;
+.holiday-bg {
+  background-color: #76bd2265;
+  border-color: #00df00;
 }
 
 .time-sch-wrapper {
