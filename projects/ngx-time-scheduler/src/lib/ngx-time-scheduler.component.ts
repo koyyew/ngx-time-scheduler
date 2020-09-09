@@ -113,7 +113,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
 
         if (i.sectionID === ele.section.id) {
           itemMeta.item = i;
-          if (itemMeta.item.start <= this.end && itemMeta.item.end >= this.start) {
+          if (itemMeta.item.start <= this.end && itemMeta.item.end > this.start) {
             itemMeta = this.itemMetaCal(itemMeta);
             ele.itemMetas.push(itemMeta);
             itemMetas.push(itemMeta);
@@ -170,8 +170,8 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
           elemBottom = elem.cssTop + this.minRowHeight;
 
           if ((
-            (prevElem.item.start <= elem.item.start && elem.item.start <= prevElem.item.end) ||
-            (prevElem.item.start <= elem.item.end && elem.item.end <= prevElem.item.end) ||
+            (prevElem.item.start <= elem.item.start && elem.item.start < prevElem.item.end) ||
+            (prevElem.item.start < elem.item.end && elem.item.end <= prevElem.item.end) ||
             (prevElem.item.start >= elem.item.start && elem.item.end >= prevElem.item.end)
           ) && (
               (prevElem.cssTop <= elem.cssTop && elem.cssTop <= prevElemBottom) ||
