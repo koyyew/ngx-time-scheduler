@@ -37,7 +37,7 @@
           {{text.SectionTitle}}
         </td>
 
-        <td class="{{ dateTime.classes ? dateTime.classes + ' text-center' : 'text-center' }}"
+        <td class="{{ dateTime.colspan == 1 ? 'text-center' + dateTime.classes : 'text-center' }}"
             *ngFor="let dateTime of timeFrameHeader.headerDetails; trackBy: trackByFn"
             [colSpan]="dateTime.colspan"
             [title]="dateTime.tooltip? dateTime.tooltip : ''"

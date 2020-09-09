@@ -44,6 +44,11 @@
   font-weight: bold;
 }
 
+.weekend-bg {
+  background-color: #fbd6d999;
+  border-color: #d40511;
+}
+
 .holiday {
   color: #FF0000;
   font-weight: bold;
