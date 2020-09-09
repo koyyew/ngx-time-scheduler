@@ -178,6 +178,7 @@ export class NgxTimeSchedulerComponent implements OnInit, OnDestroy {
               (prevElem.cssTop <= elemBottom && elemBottom <= prevElemBottom)
             )) {
             elem.cssTop = prevElemBottom + 1;
+            prev = 0;
           }
         }
 
